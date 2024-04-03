@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Conectar ao Robô</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1/dist/htmx.min.js"></script>
+</head>
+<body>
+    <h1>Conectar ao Robô</h1>
+    <form hx-post="/attempt-connection" hx-target="#connection-status" hx-swap="outerHTML">
+        <select name="port" required>
+            {% for port in ports %}
+            <option value="{{ port.device }}">{{ port.description }}</option>
+            {% else %}
+            <option>Nenhuma porta encontrada</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Conectar</button>
+    </form>
+    <div id="connection-status">
+        <!-- Resposta de tentativa de conexão será mostrada aqui -->
+    </div>
+</body>
+</html>

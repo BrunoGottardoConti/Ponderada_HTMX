@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Controle do Robô</title>
+    <!-- HTMX para chamadas AJAX -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1/dist/htmx.min.js"></script>
+    <style>
+        /* Adicione seus estilos aqui */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding-top: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            width: 50px;
+        }
+        input, button {
+            display: inline-block;
+            width: 150px;
+            margin-right: 10px;
+        }
+        a.back-to-logs {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Botão para voltar para a página de logs -->
+        <a href="/" class="back-to-logs">Voltar para Logs</a>
+
+        <h1>Controle do Robô Dobot</h1>
+        <form id="control-form" hx-post="/control" hx-target="#status" hx-swap="outerHTML">
+            <div class="input-group">
+                <label for="x">X:</label>
+                <input type="number" id="x" name="x">
+            </div>
+            <div class="input-group">
+                <label for="y">Y:</label>
+                <input type="number" id="y" name="y">
+            </div>
+            <div class="input-group">
+                <label for="z">Z:</label>
+                <input type="number" id="z" name="z">
+            </div>
+            <div class="input-group">
+                <label for="r">R:</label>
+                <input type="number" id="r" name="r">
+            </div>
+            <div class="input-group">
+                <button type="button" onclick="submitFormWithActuator('on')">Ligar Atuador</button>
+                <button type="button" onclick="submitFormWithActuator('off')">Desligar Atuador</button>
+                <button type="submit">Enviar Comandos</button>
+            </div>
+        </form>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function submitFormWithActuator(state) {
+            var form = document.getElementById('control-form');
+            var data = new FormData(form);
+            data.append('actuator', state); // Adiciona o estado do atuador aos dados do formulário
+            
+            htmx.ajax('POST', form.action, {
+                body: data,
+                target: '#status'
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Logs do Sistema</title>
+    <!-- HTMX -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@1/dist/htmx.min.js"></script>
+</head>
+<body>
+    <h1>Logs do Sistema</h1>
+    <!-- Botão para conectar com o robô -->
+    <div>
+        <button hx-get="/connect" hx-target="#port-selection" hx-swap="outerHTML">Conectar com o Robô</button>
+    </div>
+    <!-- Div onde a seleção de portas será carregada -->
+    <div id="port-selection">
+        <!-- A resposta da requisição hx-get será injetada aqui -->
+    </div>
+    <!-- Div para os logs -->
+    <div hx-get="/fetch_logs" hx-trigger="load" hx-swap="innerHTML" id="log-entries">
+        <!-- Logs serão carregados aqui -->
+    </div>
+</body>
+</html>
