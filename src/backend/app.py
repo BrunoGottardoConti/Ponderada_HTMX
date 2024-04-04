@@ -7,11 +7,9 @@ from tinydb import TinyDB
 app = Flask(__name__, template_folder='../templates')
 
 db = TinyDB('db.json')
-robot = None  # Ajuste aqui, inicialize o robô como None
-
+robot = None  
 @app.route('/')
 def logs():
-    # A rota padrão agora mostra os logs.
     logs = logs_table.all()
     return render_template('log.html', logs=logs)
 
@@ -23,10 +21,8 @@ def fetch_logs():
 @app.route('/control', methods=['GET', 'POST'])
 def control():
     if request.method == 'GET':
-        # Quando um usuário acessa a página de controle.
         return render_template('controle.html')
     elif request.method == 'POST':
-        # Quando comandos são enviados do formulário de controle.
         if not robot:
             return jsonify({'status': 'error', 'message': 'Robô não conectado.'}), 503
 
@@ -45,7 +41,7 @@ def control():
 @app.route('/connect')
 def connect():
     try:
-        ports = scanport()  # Nenhuma mudança aqui
+        ports = scanport()
         return render_template('connect.html', ports=ports)
     except Exception as e:
         return f"Erro ao buscar portas COM: {str(e)}", 500
@@ -62,7 +58,7 @@ def attempt_connection():
         return redirect('/control')
     except Exception as e:
         logs_table.insert({'action': 'connect', 'status': 'error', 'details': str(e)})
-        ports = scanport()  # Nova busca de portas para atualizar a lista.
+        ports = scanport()
         return render_template('connect.html', error=str(e), ports=ports)
 
 if __name__ == '__main__':

@@ -16,7 +16,6 @@ class Robot:
         logs_table.insert({'action': 'update_pose', 'status': 'success', 'details': f'Updated pose to x={self.x}, y={self.y}, z={self.z}, r={self.r}'})
 
     def move(self, x=None, y=None, z=None, r=None):
-        # Only update the values that have been provided
         new_x = self.x if x is None else x
         new_y = self.y if y is None else y
         new_z = self.z if z is None else z

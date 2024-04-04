@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Controle do Robô</title>
-    <!-- HTMX para chamadas AJAX -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@1/dist/htmx.min.js"></script>
     <style>
-        /* Adicione seus estilos aqui */
         .container {
             max-width: 600px;
             margin: auto;
@@ -37,7 +35,6 @@
 </head>
 <body>
     <div class="container">
-        <!-- Botão para voltar para a página de logs -->
         <a href="/" class="back-to-logs">Voltar para Logs</a>
 
         <h1>Controle do Robô Dobot</h1>
@@ -71,7 +68,7 @@
         function submitFormWithActuator(state) {
             var form = document.getElementById('control-form');
             var data = new FormData(form);
-            data.append('actuator', state); // Adiciona o estado do atuador aos dados do formulário
+            data.append('actuator', state);
             
             htmx.ajax('POST', form.action, {
                 body: data,
